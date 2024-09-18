@@ -19,16 +19,25 @@ print("[S]: Server host name is {}".format(host))
 localhost_ip = (socket.gethostbyname(host))
 print("[S]: Server IP address is {}".format(localhost_ip))
 csockid, addr = ss.accept()
+
+## csockid is the socket object
+
 print ("[S]: Got a connection request from a client at {}".format(addr))
 
 # send a intro message to the client.  
 msg = "Welcome to CS 352!"
 csockid.send(msg.encode('utf-8'))
 
-data = csockid.recv(100)
-print(data)
-print("{}".format(data.decode('utf-8')))
 
+
+# Receiving new data - Part 4
+data = csockid.recv(100)
+
+if data:
+    msg = data.decode('utf-8')
+    print(f"[S]Received msg:{msg}")
+    msg = msg + "-added on"    
+    csockid.send(msg.encode('utf-8'))
 
 # Close the server socket
 ss.close()

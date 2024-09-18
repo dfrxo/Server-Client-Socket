@@ -23,8 +23,14 @@ cs.connect(server_binding)
 data_from_server=cs.recv(100)
 print("[C]: Data received from server: {}".format(data_from_server.decode('utf-8')))
 
-data = "heh"
+
+
+
+# Sending new data
+data = "Hello"
 cs.send(data.encode('utf-8'))
+data_from_server=cs.recv(100)
+print("[C]: Data received from server: {}".format(data_from_server.decode('utf-8')))
 
 # close the client socket
 cs.close()
