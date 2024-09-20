@@ -27,6 +27,11 @@ print("[C]: Data received from server: {}".format(data_from_server.decode('utf-8
 
 
 # Sending new data
+
+with open("in-proj.txt",'r') as fw:
+    
+
+
 data = "Hello"
 cs.send(data.encode('utf-8'))
 data_from_server=cs.recv(100)

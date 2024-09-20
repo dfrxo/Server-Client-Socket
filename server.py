@@ -4,6 +4,22 @@ import random
 
 import socket
 
+def swap(word):
+    txt = "Hello World"[::-1]
+    new_string = ""
+    for c in txt:
+        if ord(c) < 91 and ord(c) > 64:
+            print(c, ord(c))
+            c = ord(c) + 32
+            new_string+=chr(c)
+
+        elif ord(c) > 96 and ord(c) < 123:
+            print(c, ord(c))
+            c = ord(c) - 32
+            new_string+=chr(c)
+        else:
+            new_string+=(c)
+
 try:
     ss = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     print("[S]: Server socket created")
@@ -31,10 +47,11 @@ csockid.send(msg.encode('utf-8'))
 
 
 # Receiving new data - Part 4
-data = csockid.recv(100)
 
+data = csockid.recv(100)
 if data:
     msg = data.decode('utf-8')
+        
     print(f"[S]Received msg:{msg}")
     msg = msg + "-added on"    
     csockid.send(msg.encode('utf-8'))
