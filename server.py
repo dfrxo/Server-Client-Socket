@@ -5,20 +5,20 @@ import random
 import socket
 
 def swap(word):
-    txt = "Hello World"[::-1]
+    txt = word[::-1]
     new_string = ""
     for c in txt:
         if ord(c) < 91 and ord(c) > 64:
-            print(c, ord(c))
             c = ord(c) + 32
             new_string+=chr(c)
 
         elif ord(c) > 96 and ord(c) < 123:
-            print(c, ord(c))
             c = ord(c) - 32
             new_string+=chr(c)
         else:
             new_string+=(c)
+    print(new_string)
+    return new_string
 
 try:
     ss = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -47,14 +47,18 @@ csockid.send(msg.encode('utf-8'))
 
 
 # Receiving new data - Part 4
+data = csockid.recv(1000)  # Combined list of lines seperated by \n # Parameter means number of bytes
+data = data.decode('utf-8')
+data = data.split('\n')   # Split into list of lines
+data.pop()                # Pop last element - extra \n character
 
-data = csockid.recv(100)
-if data:
-    msg = data.decode('utf-8')
+csockid.send("Nice".encode('utf-8')) # Nice
+
+with open("newtxtfile.txt", "w") as wtr: # (file, mode)
+    for line in data:
+        new_line = swap(line)
+        wtr.write(new_line + "\n") # Write to file
         
-    print(f"[S]Received msg:{msg}")
-    msg = msg + "-added on"    
-    csockid.send(msg.encode('utf-8'))
 
 # Close the server socket
 ss.close()

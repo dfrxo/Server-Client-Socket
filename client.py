@@ -27,13 +27,21 @@ print("[C]: Data received from server: {}".format(data_from_server.decode('utf-8
 
 
 # Sending new data
+# Read data from file
+file = open(r"in-proj.txt", "r")
+#content = str(file.readlines())   # Put data into a list of strings (each index is a line) and convert to string
 
-with open("in-proj.txt",'r') as fw:
+content = file.readlines()   # Put data into a list of strings (each index is a line) and convert to string
+msg = ""
+#print(content)
+for line in content:
+    msg = msg + line
     
+print(msg)
+#msg = msg.split("\n")
 
 
-data = "Hello"
-cs.send(data.encode('utf-8'))
+cs.send(msg.encode('utf-8'))
 data_from_server=cs.recv(100)
 print("[C]: Data received from server: {}".format(data_from_server.decode('utf-8')))
 
