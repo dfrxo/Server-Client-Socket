@@ -17,7 +17,7 @@ def swap(word):
             new_string+=chr(c)
         else:
             new_string+=(c)
-    print(new_string)
+    #print(new_string)
     return new_string
 
 try:
@@ -47,19 +47,19 @@ csockid.send(msg.encode('utf-8'))
 
 
 # Receiving new data - Part 4
-data = csockid.recv(1000)  # Combined list of lines seperated by \n # Parameter means number of bytes
+data = csockid.recv(102400)  # Combined list of lines seperated by \n # Parameter means number of bytes
 data = data.decode('utf-8')
 data = data.split('\n')   # Split into list of lines
-data.pop()                # Pop last element - extra \n character
-
+if len(data[len(data)-1]) == 0:
+    data.pop()                # Pop last element - extra \n character
 csockid.send("Nice".encode('utf-8')) # Nice
 
-with open("newtxtfile.txt", "w") as wtr: # (file, mode)
-    for line in data:
-        new_line = swap(line)
-        wtr.write(new_line + "\n") # Write to file
+with open("out-proj.txt", "w") as wtr: # (file, mode)
+    for i, line in enumerate(data):
+        new_line = swap(line) + "\n"
+        wtr.write(new_line) # Write to file
         
-
+csockid.close()
 # Close the server socket
 ss.close()
 exit()

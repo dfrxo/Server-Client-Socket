@@ -37,7 +37,7 @@ msg = ""
 for line in content:
     msg = msg + line
     
-print(msg)
+#print(msg)
 #msg = msg.split("\n")
 
 
